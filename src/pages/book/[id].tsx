@@ -1,4 +1,3 @@
-import {useRouter} from "next/router"
 import React from 'react'
 import books from "@/mock/books.json";
 import styles from "./[id].module.css";
