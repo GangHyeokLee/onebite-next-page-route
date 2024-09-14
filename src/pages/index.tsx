@@ -1,7 +1,6 @@
 import SearchableLayout from "@/components/searchable-layout";
 import {ReactNode} from "react";
 import BookItem from "@/components/book-item";
-import books from "@/mock/books.json";
 import {InferGetServerSidePropsType} from "next";
 import fetchBooks from "@/lib/fetch-books";
 import fetchRandomBooks from "@/lib/fetch-random-books";
