@@ -1,7 +1,7 @@
 import {BookData} from "@/type";
 
 export default async function fetchBooks(q?: string): Promise<BookData[]> {
-    let url = `${process.env.NEXT_PUBLIC_DB_HOST}/book`;
+    let url = `${process.env.DB_HOST}/book`;
     if(q){
         url += `/search?q=${q}`;
     }
