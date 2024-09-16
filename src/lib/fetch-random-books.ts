@@ -1,7 +1,7 @@
 import {BookData} from "@/type";
 
 export default async function fetchRandomBooks():Promise<BookData[]> {
-    const url = "http://localhost:12345/book/random";
+    const url = `${process.env.NEXT_PUBLIC_DB_HOST}/book/random`;
     try{
         const response = await fetch(url);
         if(!response.ok){
