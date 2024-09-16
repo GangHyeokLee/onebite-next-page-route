@@ -1,14 +1,19 @@
 import React from 'react'
-import books from "@/mock/books.json";
 import styles from "./[id].module.css";
-import {GetServerSidePropsContext, InferGetServerSidePropsType} from "next";
+import {GetServerSidePropsContext, InferGetStaticPropsType} from "next";
 import fetchBook from "@/lib/fetch-book";
+import {useRouter} from "next/router";
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getStaticProps = async (context: GetServerSidePropsContext) => {
 
-    const { id } = context.params!;
-    console.log(id)
+    const {id} = context.params!;
     const book = await fetchBook(Number(id));
+
+    if(!book){
+        return {
+            notFound: true,
+        }
+    }
 
     return {
         props: {
@@ -17,10 +22,27 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     }
 }
 
-export default function Page({book}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    if(!book) return "문제가 발생했습니다. 다시 시도하세요."
+export const getStaticPaths = () => {
+    return {
+        paths: [
+            {params: {id: "1"}},
+            {params: {id: "2"}},
+            {params: {id: "3"}},
+        ],
+        fallback: true,
+    }
+}
+
+export default function Page({book}: InferGetStaticPropsType<typeof getStaticProps>) {
+
+    const router = useRouter();
+    if(router.isFallback){
+        return "로딩중입니다.";
+    } else if(!book){
+        return "문제가 생겼습니다. 다시 시도하세요.";
+    }
     const {
-        id, title, subTitle, author, coverImgUrl, description, publisher
+        title, subTitle, author, coverImgUrl, description, publisher
     } = book;
 
     return (

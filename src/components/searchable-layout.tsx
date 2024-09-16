@@ -10,7 +10,7 @@ export default function SearchableLayout({children}: PropsWithChildren) {
 
     useEffect(() => {
         setSearch(q?.toString() || "");
-    }, []);
+    }, [q]);
 
     const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
